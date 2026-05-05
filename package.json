@@ -1,0 +1,21 @@
+{
+  "name": "vrm-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard rústico para scrapear VRM (sin RCP ni CVS). Guarda MHTML y HTML, parsea y visualiza.",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/server.js",
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "busboy": "^1.6.0",
+    "cheerio": "^1.1.2",
+    "express": "^4.21.2",
+    "morgan": "^1.10.1",
+    "puppeteer": "^22.15.0"
+  }
+ 
+  
+}
+

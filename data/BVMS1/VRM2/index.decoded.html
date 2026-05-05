@@ -1,0 +1,576 @@
+<!DOCTYPE html><html lang="es-ES" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths chrome  win"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="cid:css-c9342b81-2f47-47ae-80e5-9eb15a816c58@mhtml.blink" />
+    
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+
+    <title>Bosch Security Systems - VRM</title>
+    <!-- <meta name="viewport" content="width=1280, initial-scale=0.77,  maximum-scale=0.77,user-scalable=yes"> -->
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/shared/css/shared.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/vrmcockpit/css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/vrmcockpit/css/tabs.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/shared/css/a.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/shared/css/dialogMonitoringsite.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/shared/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/shared/css/conf_site_left_menu.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/monitoringsite/css/dla.css">
+    <link rel="stylesheet" type="text/css" href="https://172.25.0.18/shared/css/navigation.css">
+
+    
+    
+    
+    
+    
+</head>
+
+<body class="cockpit" id="wrapper" currpagename="cockpit">
+    <div id="spinner" style="display: none;"></div>
+
+    <div class="supergraphic-wrapper">
+        <div class="O-Header"></div>
+
+        <div class="side-nav-wrapper">
+            <div id="MenuDLA" class="monitor"><ul class="menuList vrmcockpit monitor">
+	<li class="slidingEv"></li>
+	
+	<li class="stop active">
+		<!-- empty title is required for jQuery UI tooltips -->
+		<a href="https://172.25.0.18/vrmcockpit/index.html" id="dashboard" title="">Tablero</a>
+	</li>
+
+	<li class="stop l1">
+		<a href="https://172.25.0.18/vrmcockpit/index.html#" id="peripherals" class="openable" title="">Periféricos</a>
+	</li>
+	<li class="bull l2 pe">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/devices">Dispositivos</a>
+	</li>
+	<li class="bull l2 pe">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/cameras">Cámaras</a>
+	</li>
+	<li class="bull l2 pe">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/signal_loss">Pérdida de señal</a>
+	</li>
+	<li class="bull l2 pe">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/unmanaged_devices">Grabaciones antiguas</a>
+	</li>
+	<li class="bull l2 pe">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/transcoders">Transcodificadores</a>
+	</li>
+
+	<li class="stop l1">
+		<a href="https://172.25.0.18/vrmcockpit/index.html#" id="storage" class="openable" title="">Almacenamiento</a>
+	</li>
+	<li class="bull l2 st">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/storage_overview">Descripción</a>
+	</li>
+	<li class="bull l2 st">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/targets">Destinos</a>
+	</li>
+	<li class="bull l2 st">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/luns">LUN</a>
+	</li>
+	<li class="bull l2 st">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/blocklist">Bloques</a>
+	</li>
+	<li class="bull l2 st">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/protectedblockslist">Bloques protegidos</a>
+	</li>
+
+	<li class="stop l1">
+		<a href="https://172.25.0.18/vrmcockpit/index.html#" id="system" class="openable" title="">Sistema</a>
+	</li>
+	<li class="bull l2 sy">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/logbook">Diario de registros</a>
+	</li>
+	<li class="bull l2 sy">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/export_logbook">Exportar diario de registros</a>
+	</li>
+	<li class="bull l2 sy">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/replays">Reproducciones</a>
+	</li>
+	<li class="bull l2 sy">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/jobs">Tareas</a>
+	</li>
+	<li class="bull l2 sy">
+		<a href="https://172.25.0.18/monitoringsite/index.html#/pools">Grupos</a>
+	</li>
+
+	<li class="stop l1 lrUser">
+		<a href="https://172.25.0.18/vrmcockpit/index.html#" id="video1" class="openable" title="">Video</a>
+	</li>
+	<li class="bull l2 vi">
+		<a href="https://172.25.0.18/replay/view.html?mode=l">En directo</a>
+	</li>
+	<li class="bull l2 vi">
+		<a href="https://172.25.0.18/replay/view.html?mode=r">Reproducción</a>
+	</li>
+</ul>
+</div>
+
+            <div class="header-wrapper">
+                <div id="header" class="with-logo">
+
+<div id="interactionElems">
+	<div class="header-pagename">
+		<h1>VRM</h1>
+	</div>
+	<div class="header-text" id="logoutTab">
+		<a href="https://172.25.0.18/logout.html" class="icon-Password">Cerrar sesión</a>
+	</div>
+	<div class="header-icon">
+		<a id="refreshVrmCockpit" href="https://172.25.0.18/vrmcockpit/index.html#" class="icon-Refresh" aria-label="refresh"></a>
+	</div>
+	<div class="header-icon">
+		<a id="printVrmCockpit" href="https://172.25.0.18/vrmcockpit/index.html#" class="icon-Print" aria-label="print"></a>
+	</div>
+	<div class="header-icon">
+		<a id="helpVrmCockpit" href="https://172.25.0.18/vrmcockpit/index.html#" class="icon-Help" aria-label="help"></a>
+	</div>
+	<img class="header-logo" src="https://172.25.0.18/images/bosch_logo_w340.png" alt="Bosch logo">
+</div>
+
+<div id="helpTab" tabindex="0" style="z-index:4;position:absolute;float:right;background-color:white !important;right:0px;width: 17.5%;box-shadow: -4px 6px 13px -2px rgba(0, 0, 0, .3);font-size: 14px;;display:none;">
+	<ul class="" style="padding-left: 2px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;margin-left: 0px;">
+		<li style="display: block;padding: 10px;">
+			<a href="https://172.25.0.18/vrmcockpit/index.html#" class="help" aria-label="help">
+				<span class="icon item ellipsis" value="">Ayuda</span>
+			</a>
+		</li>
+		<li style="display: block;padding: 10px;">
+			<a href="https://172.25.0.18/vrmcockpit/index.html#" class="about" aria-label="about">
+				<span class="icon item ellipsis" value="">Acerca de</span>
+			</a>
+		</li>
+	</ul>
+</div>
+</div>
+
+                <div id="content"><div id="cockpit" class="pagesHide page_cockpit"><article class="vrm-cockpit overview">
+	<header>
+		<h2>Tablero</h2>
+	</header>
+	<section class="cockpit-overview">
+		<div class="rowHolding">
+			<div class="box box-info only general_row1" style="color: rgb(0, 0, 0);"><div class="info-holder column-3">
+    <dl>
+        <dt>Tipo de servidor</dt>
+        <dd>
+            <strong>Principal</strong>
+        </dd>
+        <dt>Servidor de seguridad</dt>
+        <dd>
+            <strong>0.0.0.0</strong>
+        </dd>
+        <dt>Estado de conmutación en caso de error</dt>
+        <dd>
+            <strong>---</strong>
+        </dd>
+        <dt>Tipo de grabación</dt>
+        <dd>
+            <strong>Principal</strong>
+        </dd>
+    </dl>
+</div>
+<div class="info-holder column-3">
+    <dl>
+        <dt>Número de dispositivos</dt>
+        <dd><strong>633</strong></dd>
+        <dt>Número de grupos</dt>
+        <dd><strong>1</strong></dd>
+        <dt>Capacidad</dt>
+        <dd><strong>470.336 TB</strong></dd>
+        <dt class="tooltip" title="Tiempo de retención previsto menos periodo de comprobación de estado">Tiempo medio de retención</dt>
+        <dd><strong>53 d</strong></dd>
+    </dl>
+</div>
+<div class="info-holder column-3">
+    <dl>
+        <dt>IP del servidor</dt>
+        <dd>
+            <strong>172.25.0.18</strong>
+        </dd>
+        <dt>Versión de software</dt>
+        <dd>
+            <strong>4.50.0042</strong>
+        </dd>
+        <dt>Tiempo de funcionamiento de Video Recording Manager</dt>
+        <dd>
+            <strong class="general_time">221d 20h</strong>
+        </dd>
+        <dt>Velocidad de bits total</dt>
+        <dd>
+            <strong>892.67 Mbps</strong>
+        </dd>
+    </dl>
+</div></div>
+		</div>
+		<div class="rowHolding">
+			<div class="accordion">
+				<div class="top-radius gradient-75">
+					<h3 class="openable" style="color: rgb(0, 0, 0);">
+						<a class="icon" href="https://172.25.0.18/vrmcockpit/index.html#">Valores supervisados</a>
+					</h3>
+				</div>
+				<div class="accordion-body">
+					<div class="column-3">
+						<div class="box box-info" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Capacidad</h3>
+							<div class="box-info-content capacity_holder"><ul class="label-40">
+   <li>   
+     <span class="label leftLabel">Vacía</span>
+     <span class="value middleValue"><strong>188.392 TB</strong></span>   
+	<a style="display:none;" href="https://172.25.0.18/monitoringsite/index.html#/unmanaged_devices" class="icon fr view" aria-label="Opens in a new window"><span>Mostrar</span></a>
+   </li>
+   
+   
+   <li>
+	<span class="label leftLabel">Disponible</span>
+	<span class="value middleValue"><strong>180.349 TB</strong></span>
+	<a style="display:none;" href="https://172.25.0.18/monitoringsite/index.html#/unmanaged_devices" class="icon fr view" aria-label="Opens in a new window"><span>Mostrar</span></a>
+   </li>
+   
+   <li>
+	<span class="label leftLabel">Total</span>
+	<span class="value middleValue"><strong>470.336 TB</strong></span>
+	<a style="min-width:20px;display:none;" href="https://172.25.0.18/monitoringsite/index.html#/unmanaged_devices" class="icon fr view" aria-label="Opens in a new window"><span>Mostrar</span></a>
+   </li> 
+   
+   <li>
+	<span class="label leftLabel">Grabaciones antiguas</span>
+	<span class="value middleValue"><strong>209 GB</strong></span>
+	<a href="https://172.25.0.18/monitoringsite/index.html#/unmanaged_devices" class="icon fr view" aria-label="Opens in a new window"><span>Mostrar</span></a>
+	</li>
+   
+   <li>   
+	<span class="label leftLabel">Protegida</span>   
+	<span class="value middleValue"><strong>27.582 TB</strong></span>   
+	<a href="https://172.25.0.18/monitoringsite/index.html#/protectedblockslist" class="icon fr view" aria-label="Opens in a new window">
+	<span>Mostrar</span></a>   
+   </li>
+   
+   
+   
+</ul>
+</div>
+						</div>
+						<div class="box box-info" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Dispositivos</h3>
+							<div class="box-info-content devices_holder"><ul class="label-60">
+
+   <li class="error">
+     <span class="label leftLabel">Canales fuera de línea</span>
+	 <span class="value middleValue_15"><strong>4</strong></span>
+	 <span class="iconfont fr ">î</span>
+	</li>
+   
+   <li>
+     <span class="label leftLabel">Canales totales</span>
+     <span class="value middleValue_15"><strong>635</strong></span>
+   </li>
+   
+   <li>
+	<span class="label leftLabel">Grabaciones activas</span>
+	<span class="value middleValue_15"><strong>626</strong></span>
+   </li>
+   
+   <li>
+	<span class="label leftLabel">Inactivo</span>
+	<span class="value middleValue_15"><strong>9</strong></span>
+   </li>
+   
+   <li class="">
+   <span class="label leftLabel">Pérdida de señal</span>
+   <span class="value middleValue_15"><strong>0</strong></span>
+   <a href="https://172.25.0.18/monitoringsite/index.html#/signal_loss" class="icon fr view" aria-label="Opens in a new window"><span>Mostrar</span></a>
+   </li>
+   
+</ul></div>
+						</div>
+					</div>
+					<div class="column-3">
+						<div class="box box-info" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Sistema</h3>
+							<div class="box-info-content vrm_times"><ul class="label-50 vertical-10">
+	<li><span class="label leftLabel">Fecha y hora del servidor</span><span class="value middleValue_44_2"><strong>5/5/2026 10:54:41</strong></span></li>
+	<li><span class="label leftLabel">Tiempo de funcionamiento del sistema</span><span class="value middleValue_44"><strong>349d 04h</strong></span></li>
+	<li><span class="label leftLabel">Tiempo de funcionamiento de Video Recording Manager</span><span class="value middleValue_44"><strong>221d 20h</strong></span></li>
+</ul>
+</div>
+						</div>
+						<div class="box box-info" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Licencia</h3>
+							<div class="box-info-content">
+								<ul class="label-50">
+									<li>
+										<span class="label leftLabel">Tipo</span>
+										<span class="value middleValue_44">
+											<strong>Normal</strong>
+										</span>
+									</li>
+									<li>
+										<span class="label leftLabel">Canales con licencia</span>
+										<span class="value middleValue_44">
+											<strong>2048</strong>
+										</span>
+									</li>
+									<li>
+										<span class="label leftLabel">Canales utilizados</span>
+										<span class="value middleValue_44">
+											<strong>635</strong>
+										</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="column-3">
+						<div class="box box-info" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Compensación de carga</h3>
+							<div class="box-info-content load_balancing_holder"><ul class="vertical-10">
+    <li>
+        <table>
+            <thead>
+                <tr>
+                    <th class="first">Mbps</th>
+                    <th>Previsión</th>
+                    <th class="last">Límite</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="first">&nbsp;</td>
+                    <td>1060</td>
+                    <td class="last">2500</td>
+                </tr>
+            </tbody>
+        </table>
+    </li>
+    <li>
+        <hr>
+        <table>
+            <thead>
+                <tr>
+                    <th class="first">Sesiones iSCSI</th>
+                    <th>Previsión</th>
+                    <th class="last">Límite</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="first">&nbsp;</td>
+                    <td>634</td>
+                    <td class="last">800</td>
+                </tr>
+            </tbody>
+        </table>
+    </li>
+</ul>
+</div>
+						</div>
+						<div class="box box-info" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Almacenamiento</h3>
+							<div class="box-info-content luns_holder"><ul class="label-60">
+   <li><span class="label leftLabel">Destinos totales</span><span class="value middleValue_15"><strong>2</strong></span></li>
+   <li><span class="label leftLabel">LUN totales</span><span class="value middleValue_15"><strong>40</strong></span></li>
+   <li class=" "><span class="label leftLabel">Destinos fuera de línea</span><span class="value middleValue_15"><strong>0</strong></span></li>
+   <li><span class="label leftLabel">LUN de solo lectura</span><span class="value middleValue_15"><strong>0</strong></span></li>
+   <li><span class="label leftLabel">Estado de detección</span><span class="value middleValue_15"><strong>Completada</strong></span></li>
+   <li><span class="label leftLabel">LUN restantes</span><span class="value middleValue_15"><strong>0</strong></span><a href="https://172.25.0.18/monitoringsite/index.html#/targets" class="icon fr view" aria-label="Opens in a new window"><span>Mostrar</span></a></li>
+</ul></div>
+						</div>
+					</div>
+					<div class="column-3">
+						<div class="box box-info last" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Transcodificadores</h3>
+							<div class="box-info-content transcoders_holder"><ul class="vertical-10 label-30" style="margin-bottom: 0px;">
+    <li style="margin-bottom:0px">
+        <span class="label leftLabel">Estado</span>
+        <span class="value middleValue_44">
+            <strong>No está presente</strong>
+        </span>
+    </li>
+    <li style="margin-bottom:0px">
+        <span class="label leftLabel">Versión</span>
+        <span class="value middleValue_44">
+            <strong>---</strong>
+        </span>
+    </li>
+</ul>
+
+<div class="transcoder-details-with-chart">
+    <ul class="label-40" style="margin-bottom:0px">
+        <li><span class="label"><strong>Sesiones</strong></span></li>
+        <li><span class="label">En uso</span><span class="value"><strong class="sesionsInUse">0</strong></span></li>
+        <li><span class="label">Disponible</span><span class="value"><strong class="sesionsAvailable">0</strong></span></li>
+        <li><span class="label">Fuera de línea</span><span class="value"><strong class="sesionsOffline">0</strong></span></li>
+    </ul>
+
+</div></div>
+						</div>
+						<div class="box box-info last" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Grupos</h3>
+							<div class="box-info-content pools_holder"><ul class="label-50">
+
+   <li>
+     <span class="label">Total</span>
+	 <span class="value"><strong>1</strong></span>
+	 <!-- <span class="iconfont fr ">&#xE715;</span> -->
+	</li>
+   
+   <li class="">
+     <span class="label">Sobrecargados</span>
+     <span class="value"><strong>0</strong></span>
+   </li>
+   
+</ul></div>
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="rowHolding">
+			<div class="accordion">
+				<div class="top-radius gradient-75">
+					<h3 class="openable" style="color: rgb(0, 0, 0);">
+						<a class="icon" href="https://172.25.0.18/vrmcockpit/index.html#">Registros y gráfico de velocidad de bits</a>
+					</h3>
+				</div>
+				<div class="accordion-body">
+					<div class="column-6 bitrate_graph_box">
+						<div class="box box-info" style="color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Gráfico de velocidad de bits</h3>
+							<div class="box-info-content">
+								<div class="bitrate-graph-holder">
+									<div class="controls">
+										<ul>
+											<li class="fl">
+												<div class="dropdown filterSelect">
+													<button class="btn-default btn-grey" aria-label="button">
+														<span class="icon-WateringCan"></span>
+													</button>
+													<div class="dropdown-items">
+														<div class="viewport">
+															<div class="overview">
+																<div>
+																	<h3 style="color: rgb(0, 0, 0);">
+																		Filtros
+																		<span class="iconfont fr">î</span>
+																	</h3>
+																	<div class="from-to">
+
+																		<fieldset class="fild_checkbox">
+																			<legend>
+																				<strong>Mostrar</strong>
+																			</legend>
+																			<input name="filter_radio" type="radio" id="hour_1" value="h" class="radio icon">
+																				<label for="hour_1">1 hora</label>
+																				<input name="filter_radio" type="radio" id="week_1" value="w" class="radio icon">
+																					<label for="week_1">1 semana</label>
+																				</fieldset>
+
+																		<fieldset class="fild_checkbox">
+																			<input name="filter_radio" type="radio" id="day_1" value="d" class="radio icon">
+																				<label for="day_1">1 día</label>
+																				<input name="filter_radio" type="radio" id="month_1" value="m" class="radio icon">
+																					<label for="month_1">1 mes</label>
+																				</fieldset>
+
+
+																		<hr>
+																		<div>
+																			<label for="fifterDateFrom">Desde</label>
+																			<input type="text" name="fifterDateFrom" id="fifterDateFrom" class="fifterDateFrom inputGraphStarttime fl txt-field btn-default small w120 hasDatepicker" value=""><button type="button" class="ui-datepicker-trigger" aria-label="button" style="display: none;">...</button>
+																			<button class="btn-default fl btn-grey calender" aria-label="button">
+																				<span class="icon"></span>
+																			</button>
+																		</div>
+																		<div>
+																			<label for="fifterDateTo">Hasta</label>
+																			<input type="text" name="fifterDateTo" id="fifterDateTo" class="fifterDateTo inputGraphEndtime fl txt-field btn-default small w120 hasDatepicker" value=""><button type="button" class="ui-datepicker-trigger" aria-label="button" style="display: none;">...</button>
+																			<button class="btn-default fl btn-grey calender" aria-label="button">
+																				<span class="icon"></span>
+																			</button>
+																		</div>
+																		<button class="btn-default btn-grey fr filter-link" aria-label="button">Filtro</button>
+																	</div>
+
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</li>
+											<li class="fr">
+												 <button class="btn-default btn-grey reloadBtn" aria-label="button">
+													<span class="icon-Reload"></span>
+												</button>
+											</li>
+											<li class="fr">
+												<button class="btn-default btn-grey Drag" aria-label="button">
+													<span class="icon-Drag"></span>
+												</button>
+											</li>
+											<li class="fr">
+												<button class="btn-default btn-grey ZoomOut" aria-label="button">
+													<span class="icon-ZoomOut"></span>
+												</button>
+											</li>
+											<li class="fr">
+												<button class="btn-default btn-grey ZoomIn" aria-label="button">
+													<span class="icon-ZoomIn"></span>
+												</button>
+											</li>
+										</ul>
+									</div>
+
+									<div class="graphHolder" style="padding: 0px; background: rgb(255, 255, 255); overflow: hidden;"><div class="over_flot-touch-container" style="width:100%; height:100%; overflow:hidden;"><div class="flot-touch-container" style="width:100%; height:100%;"><canvas class="base" width="422" height="355"></canvas><canvas class="overlay" width="422" height="355" style="position: absolute; left: 0px; top: 0px;"></canvas></div></div><div class="tickLabels" style="font-size:smaller"><div class="xAxis x1Axis" style="color:#545454"><div class="tickLabel" style="position:absolute;text-align:center;left:23px;top:355px;width:52px">Feb 15</div><div class="tickLabel" style="position:absolute;text-align:center;left:88px;top:355px;width:52px">Mar 1</div><div class="tickLabel" style="position:absolute;text-align:center;left:157px;top:355px;width:52px">Mar 16</div><div class="tickLabel" style="position:absolute;text-align:center;left:231px;top:355px;width:52px">Apr 1</div><div class="tickLabel" style="position:absolute;text-align:center;left:301px;top:355px;width:52px">Apr 16</div><div class="tickLabel" style="position:absolute;text-align:center;left:370px;top:355px;width:52px">May 1</div></div><div class="yAxis y1Axis" style="color:#545454"><div class="tickLabel" style="position: absolute; text-align: left; top: 342px; left: 422.438px; width: 0px; display: none;"><label class="ellipsis noWrap ">0 bps</label></div><div class="tickLabel" style="position:absolute;text-align:left;top:284px;left:422.438px;width:0px"><label class="ellipsis noWrap ">195.3 Mbps</label></div><div class="tickLabel" style="position:absolute;text-align:left;top:226px;left:422.438px;width:0px"><label class="ellipsis noWrap ">390.6 Mbps</label></div><div class="tickLabel" style="position:absolute;text-align:left;top:168px;left:422.438px;width:0px"><label class="ellipsis noWrap ">585.9 Mbps</label></div><div class="tickLabel" style="position:absolute;text-align:left;top:109px;left:422.438px;width:0px"><label class="ellipsis noWrap ">781.3 Mbps</label></div><div class="tickLabel" style="position:absolute;text-align:left;top:51px;left:422.438px;width:0px"><label class="ellipsis noWrap ">976.6 Mbps</label></div><div class="tickLabel" style="position:absolute;text-align:left;top:-7px;left:422.438px;width:0px"><label class="ellipsis noWrap ">1.1 Gbps</label></div></div></div></div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="column-6 logs_box">
+						<div class="box box-info last" style="padding-left: 20px; padding-right: 20px; text-indent: 0px; color: rgb(0, 0, 0);">
+							<h3 style="color: rgb(0, 0, 0);">Registros</h3>
+							<div class="box-info-content">
+								<div class=".page_cockpit">
+									<div id="cockpit"><div id="cockpit_default_118114109095109111095112114101115101116095098097115105099_wrapper" class="dataTables_wrapper no-footer"><div id="cockpit_default_118114109095109111095112114101115101116095098097115105099_filter" class="dataTables_filter"><label for="search1">Buscar<input type="search" class="" placeholder="" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" id="search1"></label></div><div class="dataTables_scroll"><div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;"><div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 467px; padding-right: 0px;"><table style="width: 467px; margin-left: 0px;" class="display dataTable no-footer" cellspacing="0" role="grid"><thead><tr role="row"><th data-column-index="0" class="sorting_desc" tabindex="0" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 25.1094px;" aria-sort="descending" aria-label="Tipo">Tipo</th><th data-column-index="1" class="sorting" tabindex="0" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 96.9844px;" aria-label="Dirección">Dirección</th><th data-column-index="2" class="sorting" tabindex="0" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 52.9219px;" aria-label="Fecha">Fecha</th><th data-column-index="3" class="sorting" tabindex="0" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 187.984px;" aria-label="Descripción">Descripción</th></tr></thead></table></div></div><div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%;"><table style="width: 100%;" id="cockpit_default_118114109095109111095112114101115101116095098097115105099" class="display dataTable no-footer" cellspacing="0" role="grid" aria-describedby="cockpit_default_118114109095109111095112114101115101116095098097115105099_info"><thead><tr role="row" style="height: 0px;"><th data-column-index="0" class="sorting_desc" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 25.1094px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-sort="descending" aria-label="Tipo"><div class="dataTables_sizing" style="height:0;overflow:hidden;">Tipo</div></th><th data-column-index="1" class="sorting" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 96.9844px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Dirección"><div class="dataTables_sizing" style="height:0;overflow:hidden;">Dirección</div></th><th data-column-index="2" class="sorting" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 52.9219px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Fecha"><div class="dataTables_sizing" style="height:0;overflow:hidden;">Fecha</div></th><th data-column-index="3" class="sorting" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" rowspan="1" colspan="1" style="width: 187.984px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Descripción"><div class="dataTables_sizing" style="height:0;overflow:hidden;">Descripción</div></th></tr></thead><tbody><tr role="row" class="odd"><td class="sorting_1"><span class="iconfont red" title="Error">î</span></td><td>172.28.131.129\0</td><td>2026-05-05 10:45:49</td><td>Connection to device lost.
+</td></tr><tr role="row" class="even"><td class="sorting_1"><span class="iconfont red" title="Error">î</span></td><td>172.27.15.139\0</td><td>2026-05-05 10:45:19</td><td>Connection to device lost.
+</td></tr><tr role="row" class="odd"><td class="sorting_1"><span class="iconfont red" title="Error">î</span></td><td>172.26.4.129\0</td><td>2026-05-05 10:44:19</td><td>Connection to device lost.
+</td></tr><tr role="row" class="even"><td class="sorting_1"><span class="iconfont red" title="Error">î</span></td><td>172.28.131.129\0</td><td>2026-05-05 10:35:50</td><td>Connection to device lost.
+</td></tr><tr role="row" class="odd"><td class="sorting_1"><span class="iconfont red" title="Error">î</span></td><td>172.26.40.129\0</td><td>2026-05-05 10:34:55</td><td>Connection to device lost.
+</td></tr><tr role="row" class="even"><td class="sorting_1"><span class="iconfont red" title="Error">î</span></td><td>172.28.131.129\0</td><td>2026-05-05 10:24:20</td><td>Connection to device lost.
+</td></tr></tbody></table></div></div><div class="dataTables_info" id="cockpit_default_118114109095109111095112114101115101116095098097115105099_info" role="status" aria-live="polite">Entradas mostradas: 1 a 6 | Entradas totales: 99</div><div class="dataTables_paginate paging_full_numbers" id="cockpit_default_118114109095109111095112114101115101116095098097115105099_paginate"><a class="paginate_button first disabled" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="0" tabindex="0" id="cockpit_default_118114109095109111095112114101115101116095098097115105099_first">î</a><a class="paginate_button previous disabled" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="1" tabindex="0" id="cockpit_default_118114109095109111095112114101115101116095098097115105099_previous">î¡</a><span><a class="paginate_button current" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="2" tabindex="0">1</a><a class="paginate_button " aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="3" tabindex="0">2</a><a class="paginate_button " aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="4" tabindex="0">3</a><a class="paginate_button " aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="5" tabindex="0">4</a><a class="paginate_button " aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="6" tabindex="0">5</a><span class="ellipsis">â¦</span><a class="paginate_button " aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="7" tabindex="0">17</a></span><a class="paginate_button next" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="8" tabindex="0" id="cockpit_default_118114109095109111095112114101115101116095098097115105099_next">î¢</a><a class="paginate_button last" aria-controls="cockpit_default_118114109095109111095112114101115101116095098097115105099" data-dt-idx="9" tabindex="0" id="cockpit_default_118114109095109111095112114101115101116095098097115105099_last">î</a></div></div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</article>
+</div></div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>

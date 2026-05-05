@@ -1,0 +1,198 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>VRM Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css?v=21" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="topbar topbar-flat">
+    <div class="brand">
+      <div class="logo"></div>
+      <div class="title">
+        <strong>VRM Dashboard</strong>
+        <span>Monitor BVMS / VRM</span>
+      </div>
+    </div>
+
+    <!-- Selector de topología con presets -->
+    <div class="controls">
+      <div class="field">
+        <label>BVMS</label>
+        <select id="sel-bvms" class="select"></select>
+      </div>
+      <div class="field">
+        <label>VRM</label>
+        <select id="sel-vrm" class="select"></select>
+      </div>
+      <div class="field">
+        <label>IP del VRM</label>
+        <input id="in-ip" placeholder="172.25.0.24" />
+      </div>
+      <button class="btn" id="btn-add-endpoint">Agregar</button>
+      <button class="btn ghost" id="btn-reset-endpoints" title="Volver a los presets">Reset</button>
+    </div>
+
+    <div class="file-controls">
+      <div class="field small">
+        <label>user</label>
+        <input id="in-user" value="srvadmin" />
+      </div>
+      <div class="field small">
+        <label>pass</label>
+        <input id="in-pass" type="text" value="DFDgsfe01!" />
+      </div>
+
+      <label class="remember">
+        <input type="checkbox" id="remember-creds" />
+        Recordar credenciales
+      </label>
+
+      <div class="field small">
+        <label>Auto-refresh</label>
+        <select id="auto-refresh" class="select">
+          <option value="0">Off</option>
+          <option value="30">30s</option>
+          <option value="60">60s</option>
+          <option value="300">5m</option>
+        </select>
+      </div>
+
+      <button class="btn primary" id="btn-scan">Escanear</button>
+
+      <!--<label class="btn file">
+        <input id="f-index" type="file" accept=".mhtml,.mht,.html,.htm" hidden />
+        Adjuntar index.mhtml
+      </label>
+      <label class="btn file">
+        <input id="f-cams" type="file" accept=".html,.htm" hidden />
+        Adjuntar showCameras.html
+      </label>
+      <label class="btn file">
+        <input id="f-devs" type="file" accept=".html,.htm" hidden />
+        Adjuntar showDevices.html
+      </label>
+      <label class="btn file">
+        <input id="f-targets" type="file" accept=".html,.htm" hidden />
+        Adjuntar showTargets.html
+      </label>
+      <button class="btn success" id="btn-parse">
+        Parsear adjuntos <span id="attach-badge" class="badge">0/4</span>
+      </button>-->
+    </div>
+
+    <div class="selected-endpoints">
+      <div class="chips-title">Destinos seleccionados</div>
+      <div id="chips-list" class="chips"></div>
+    </div>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="tabs" id="tabs-top">
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="camaras">Cámaras</button>
+    <button class="tab" data-tab="vrms">VRMs</button>
+  </nav>
+
+  <main class="wrap">
+    <!-- OVERVIEW -->
+    <section id="overview" class="tabpage active">
+      <div class="kpis">
+        <div class="kpi tone-blue">
+          <div class="label">Cámaras totales</div>
+          <div class="value" id="ov-total-channels">0</div>
+        </div>
+        <div class="kpi tone-purple">
+          <div class="label">Cámaras con problemas</div>
+          <div class="value" id="ov-offline">0</div>
+        </div>
+        <div class="kpi tone-green">
+          <div class="label">Grabaciones activas</div>
+          <div class="value" id="ov-active">0</div>
+        </div>
+        <div class="kpi tone-orange">
+          <div class="label">Otros problemas</div>
+          <div class="value" id="ov-bvms">0</div>
+        </div>
+        <div class="kpi tone-red">
+          <div class="label" id="ov-problems-label">Problemas RED/HW</div>
+          <div class="value" id="ov-problems">0</div>
+        </div>
+      </div>
+
+      <!-- Donut -->
+      <div class="charts one center">
+        <div class="chart-card slim donut">
+          <h4>Gráfico</h4>
+          <canvas id="chart-overview"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÁMARAS -->
+    <section id="camaras" class="tabpage">
+      <div class="subheader">
+        <div class="left">
+          <input id="cam-search" class="search" placeholder="Buscar cámara / IP / estado…" />
+          <div class="filters" id="cam-filters">
+            <button class="chip filter active" data-state="all">Todas</button>
+            <button class="chip filter" data-state="Offline">Offline</button>
+            <button class="chip filter" data-state="Recording">Recording</button>
+            <button class="chip filter" data-state="Pending">Pending</button>
+            <button class="chip filter" data-state="Disabled">Disabled</button>
+            <button class="chip filter" data-state="Error">Error</button>
+          </div>
+        </div>
+        <div class="right">
+          <div class="subtabs" id="cams-subtabs"></div>
+          <button class="btn ghost" id="btn-export">Exportar CSV</button>
+        </div>
+      </div>
+
+      <div class="hint"></div>
+
+      <div class="table-wrap">
+        <table id="tbl-cams" class="table">
+          <thead>
+            <tr>
+              <th data-key="cameraName"     class="sortable">CameraName</th>
+              <th data-key="address"        class="sortable">Address</th>
+              <th data-key="fwVersion"      class="sortable">FW version</th>
+              <th data-key="recordingState" class="sortable">Recording state</th>
+              <th data-key="maxBitrate"     class="sortable">Max bitrate</th>
+              <th data-key="connectionTime" class="sortable">Connection time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- VRMs -->
+    <section id="vrms" class="tabpage">
+      <div class="subheader">
+        <div class="subtabs" id="vrms-subtabs" style="display:none;"></div>
+      </div>
+      <div id="vrm-cards" class="vrm-cards"></div>
+      
+    </section>
+  </main>
+
+  <!-- Drill-down modal -->
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="md-title">Detalle</h3>
+        <button id="md-close" class="btn ghost">✕</button>
+      </div>
+      <div id="md-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="vendor/chart.umd.js"></script>
+  <script src="/app.js?v=21" type="module"></script>
+</body>
+</html>

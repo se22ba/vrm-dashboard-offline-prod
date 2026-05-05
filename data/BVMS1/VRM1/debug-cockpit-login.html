@@ -1,0 +1,49 @@
+<!DOCTYPE html><html><head id="Head">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE9">
+	<meta charset="UTF-8">	
+	<link rel="stylesheet" type="text/css" href="../shared/css/shared.combined1.dlacockpit.css">
+    <link rel="stylesheet" type="text/css" href="../shared/css/base.css">
+    <link rel="stylesheet" type="text/css" href="../shared/css/header.css">
+	<link rel="stylesheet" type="text/css" href="../shared/css/main.css">
+    <script src="../shared/js/lib/jquery-3.7.1.min.js"></script>	
+    <script src="../shared/js/lib/jstorage.min.js"></script>
+    <script src="../shared/js/utils/login.min.js"></script>
+</head>
+<body>
+	<div class="O-Header"></div>	
+	<header id="header" class="with-logo">
+		<h1>VRM</h1>	
+	</header>	
+	<div id="menu"></div>	
+	<div id="spinner" style="display: none;"></div>	
+	<div id="loginContent" class="">	
+		<form name="form1" id="form1" method="GET" action="../forwardToPage.html">
+			<div class="loginBox">
+				<label>
+					<h3 class="loginBoxLabel" lkey="vrm_st_login_header">Inicio de sesión</h3>
+				</label>
+				<div class="boxLogin">
+					<p>
+						<label class="column-3" lkey="vrm_st_login_user" for="user">Nombre de usuario</label>
+						<input class="column-8 txt-field btn-default full-width" tabindex="1" type="text" id="username" autocorrect="off" autocapitalize="off" spellcheck="false">
+					</p>
+					<br>
+					<br>
+					<p>
+						<label class="column-3" lkey="vrm_st_login_password" for="pass">Contraseña</label>
+						<input class="column-8 txt-field btn-default full-width" tabindex="2" type="password" id="password" autocorrect="off" autocapitalize="off" spellcheck="false">
+						<br>
+					</p>
+				</div>				
+				<div id="result"></div>
+				<p><a href="masterpwd.html" lkey="vrm_st_login_reset_password_link">¿Ha olvidado la contraseña?</a></p>
+				<p id="submitButton">
+					<button class="btn-default btn-grey" tabindex="3" type="submit" id="submit" lkey="vrm_st_login_button">Iniciar sesión</button>
+					<input type="hidden" class="hidden" id="ref" name="ref" value="/vrmcockpit/index.html">
+				</p>
+			</div>
+		</form>
+		<br>
+	</div>
+
+</body></html>
