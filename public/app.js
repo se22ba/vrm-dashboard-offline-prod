@@ -22,6 +22,45 @@ function cloneTargetsSummary(data={}) {
   return cloned;
 }
 function createTargetsState(){ return { totals:createEmptyTargetsSummary(), byVrm:{} }; }
+
+function parseDurationToSeconds(raw){
+  const txt = String(raw||'').trim();
+  if (!txt) return 0;
+  const dmy = txt.match(/(?:(\d+)\s*d)?\s*(?:(\d+)\s*h)?\s*(?:(\d+)\s*m)?\s*(?:(\d+)\s*s)?/i);
+  if (dmy && dmy[0].trim()) {
+    const d=Number(dmy[1]||0), h=Number(dmy[2]||0), m=Number(dmy[3]||0), s=Number(dmy[4]||0);
+    const sec=d*86400+h*3600+m*60+s; if (sec>0) return sec;
+  }
+  if (/^\d{1,2}:\d{1,2}:\d{1,2}$/.test(txt)){
+    const [h,m,s]=txt.split(':').map(Number); return h*3600+m*60+s;
+  }
+  const n=Number(txt.replace(/[^\d]/g,''));
+  return Number.isFinite(n)?n:0;
+}
+function formatUptime(seconds){
+  if (!seconds) return '—';
+  const d=Math.floor(seconds/86400), h=Math.floor((seconds%86400)/3600), m=Math.floor((seconds%3600)/60);
+  if (d>0) return `${d}d ${h}h`;
+  if (h>0) return `${h}h ${m}m`;
+  return `${m}m`;
+}
+function buildVrmOperationalSummary(vrmKey, meta={}){
+  const key = String(vrmKey||'').trim().toLowerCase();
+  const metaVrm = String(meta?.vrm||'').trim().toLowerCase();
+  const cams=(state.cams||[]).filter(c=>{
+    const target = String(c.primaryTarget||'').trim().toLowerCase();
+    if (key && target===key) return true;
+    if (metaVrm && target===metaVrm) return true;
+    if (metaVrm && target.includes(metaVrm)) return true;
+    return false;
+  });
+  const total=cams.length;
+  const offline=cams.filter(c=>String(c.recordingState||'').toLowerCase().includes('offline')).length;
+  const active=cams.filter(c=>/^(?:\s*)recording\b/i.test(c.recordingState||'') && !/disabled/i.test(c.recordingState||'')).length;
+  const uptime=Math.max(0,...cams.map(c=>parseDurationToSeconds(c.connectionTime)));
+  return {total,offline,active,uptime};
+}
+
 function normalizeTargetsData(payload){
   if (!payload) return createTargetsState();
   const hasNewShape = payload.totals || payload.byVrm;
@@ -314,6 +353,14 @@ function renderOverview(){
   const nonBvmsIssues = offlineChannels + signalLoss;
   $('#ov-problems') && ($('#ov-problems').textContent = fmt(nonBvmsIssues));
   const lbl = $('#ov-problems-label'); if (lbl) lbl.textContent = 'Problemas RED/HW';
+  const perVrm = state.overviewFinal?.perVrm || {};
+  const vrmsWithProblems = Object.values(perVrm).filter(vrm => {
+    const total = Number(vrm?.totalChannels || 0);
+    const active = Number(vrm?.activeRecordings || 0);
+    const offline = Number(vrm?.offlineChannels || 0);
+    return offline > 0 || (total > 0 && active < total);
+  }).length;
+  $('#ov-vrms-problems') && ($('#ov-vrms-problems').textContent = fmt(vrmsWithProblems));
 
   const total      = totalChannels;
   const data       = [activeRecordings, bvmsIssues, nonBvmsIssues];
@@ -502,7 +549,12 @@ function renderTargets(){
       if (data.meta?.bvms) subtitleParts.push(data.meta.bvms);
       if (data.meta?.ip)   subtitleParts.push(data.meta.ip);
       const subtitle = subtitleParts.join(' • ');
+      const op = buildVrmOperationalSummary(key, data.meta || {});
       const metrics = [
+        ['Cámaras alojadas', op.total],
+        ['Cámaras activas', op.active],
+        ['Cámaras offline', op.offline],
+        ['Activo desde (estimado)', formatUptime(op.uptime)],
         ['Total number of targets', data.targetsSummary?.['Total number of targets']],
         ['Usable capacity Targets (GiB)', data.targetsSummary?.['Usable capacity targets [GiB]']],
         ['Offline Targets', data.targetsSummary?.['Offline Targets']],
@@ -516,7 +568,7 @@ function renderTargets(){
       ];
       const metricsHtml = metrics.map(([label,value])=>{
         const num = Number(value ?? 0);
-        const formatted = Number.isFinite(num) ? fmt(num) : '—';
+        const formatted = typeof value === 'string' ? value : (Number.isFinite(num) ? fmt(num) : '—');
         const warnClass = offlineLabels.has(label) && num > 0 ? ' warn' : '';
         return `<div class="vrm-metric${warnClass}"><span>${esc(label)}</span><strong>${formatted}</strong></div>`;
       }).join('');
@@ -706,7 +758,8 @@ function renderCams(filterVrmKey){
       <td>${esc(r.fwVersion)}</td>
       <td>${esc(r.recordingState)}</td>
       <td>${esc(r.maxBitrate)}</td>
-      <td>${esc(r.connectionTime)}</td>`;
+      <td>${esc(r.connectionTime)}</td>
+      <td>${esc(r.primaryTarget||'')}</td>`;
     tr.onclick = ()=> openDrillDown(r);
     tbody.appendChild(tr);
   }
@@ -790,8 +843,8 @@ $('#btn-export')?.addEventListener('click', ()=>{
                                  return 0;
                                });
   const csvRows = [
-    ['CameraName','Address','FW version','Recording state','Max bitrate','Connection time'],
-    ...rows.map(r=>[r.cameraName,r.address,r.fwVersion,r.recordingState,r.maxBitrate,r.connectionTime])
+    ['CameraName','Address','FW version','Recording state','Max bitrate','Connection time','VRM'],
+    ...rows.map(r=>[r.cameraName,r.address,r.fwVersion,r.recordingState,r.maxBitrate,r.connectionTime,r.primaryTarget])
   ];
   const csv = csvRows.map(r=>r.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'}), url = URL.createObjectURL(blob);
