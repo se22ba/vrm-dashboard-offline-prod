@@ -8,7 +8,7 @@ const pct = (a,b)=> b>0 ? (100*a/b) : 0;
 
 // === feature flags ===
 
-const SHOW_VRM_TABS_IN_CAMERAS = false;
+const SHOW_VRM_TABS_IN_CAMERAS = true;
 
 function createEmptyTargetsSummary(){ return { targetsSummary:{}, lunsSummary:{}, blocksSummary:{}, details:[] }; }
 function cloneTargetsSummary(data={}) {
@@ -136,25 +136,27 @@ function maybeSaveCreds(){
 
 // ===== build selectors + chips =====
 function buildSelectors(){
-  const bvmsSel = $('#sel-bvms'), vrmSel = $('#sel-vrm'), ipIn = $('#in-ip');
-  if (!bvmsSel || !vrmSel || !ipIn) return;
+  const bvmsIn = $('#sel-bvms'), vrmIn = $('#sel-vrm'), ipIn = $('#in-ip');
+  const bvmsList = $('#bvms-list'), vrmList = $('#vrm-list');
+  if (!bvmsIn || !vrmIn || !ipIn || !bvmsList || !vrmList) return;
 
-  const bvmsList = [...new Set(FACTORY_PRESETS.map(x=>x.bvms))];
-  bvmsSel.innerHTML = bvmsList.map(b=>`<option>${b}</option>`).join('');
+  const all = [...FACTORY_PRESETS, ...(state.endpoints||[])];
+  const uniqueBvms = [...new Set(all.map(x=>x.bvms).filter(Boolean))].sort();
+  bvmsList.innerHTML = uniqueBvms.map(v=>`<option value="${esc(v)}"></option>`).join('');
 
-  const fillVrms = ()=>{
-    const bv = bvmsSel.value;
-    const vrms = FACTORY_PRESETS.filter(x=>x.bvms===bv).map(x=>x.vrm);
-    vrmSel.innerHTML = [...new Set(vrms)].map(v=>`<option>${v}</option>`).join('');
-    updateIp();
+  const refreshVrms = ()=>{
+    const bv = bvmsIn.value.trim();
+    const vrms = [...new Set(all.filter(x=>!bv || x.bvms===bv).map(x=>x.vrm).filter(Boolean))].sort();
+    vrmList.innerHTML = vrms.map(v=>`<option value="${esc(v)}"></option>`).join('');
+    const match = all.find(x=>x.bvms===bvmsIn.value.trim() && x.vrm===vrmIn.value.trim());
+    if (match?.ip) ipIn.value = match.ip;
   };
-  const updateIp = ()=>{
-    const match = FACTORY_PRESETS.find(x=>x.bvms===bvmsSel.value && x.vrm===vrmSel.value);
-    ipIn.value = match?.ip || '';
-  };
-  bvmsSel.onchange = fillVrms;
-  vrmSel.onchange  = updateIp;
-  fillVrms();
+  bvmsIn.addEventListener('input', refreshVrms);
+  vrmIn.addEventListener('input', refreshVrms);
+
+  if (!bvmsIn.value) bvmsIn.value = state.endpoints?.[0]?.bvms || FACTORY_PRESETS[0].bvms;
+  if (!vrmIn.value) vrmIn.value = state.endpoints?.[0]?.vrm || FACTORY_PRESETS[0].vrm;
+  refreshVrms();
 }
 
 function renderChips(){
@@ -172,14 +174,14 @@ function renderChips(){
   });
 }
 $('#btn-add-endpoint')?.addEventListener('click', ()=>{
-  const bvms = $('#sel-bvms')?.value, vrm = $('#sel-vrm')?.value, ip = $('#in-ip')?.value?.trim();
+  const bvms = $('#sel-bvms')?.value?.trim(), vrm = $('#sel-vrm')?.value?.trim(), ip = $('#in-ip')?.value?.trim();
   if (!bvms || !vrm || !ip) return;
   if (!state.endpoints.some(e=>e.bvms===bvms && e.vrm===vrm && e.ip===ip)){
-    state.endpoints.push({bvms,vrm,ip}); saveEndpoints(); renderChips();
+    state.endpoints.push({bvms,vrm,ip}); saveEndpoints(); renderChips(); buildSelectors();
   }
 });
 $('#btn-reset-endpoints')?.addEventListener('click', ()=>{
-  state.endpoints = FACTORY_PRESETS.slice(); saveEndpoints(); renderChips();
+  state.endpoints = FACTORY_PRESETS.slice(); saveEndpoints(); renderChips(); buildSelectors();
 });
 
 // ===== badge adjuntos =====
@@ -223,17 +225,26 @@ async function doScan(){
     targets: createTargetsState()
   };
 
-  for (const ep of state.endpoints){
-    try{
-      const res = await fetch('/api/scrape',{
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ bvms:ep.bvms, vrm:ep.vrm, ip:ep.ip, user, pass })
-      });
-      if (!res.ok){ console.warn('scan fail', ep, await res.text()); continue; }
-      const j = await res.json();
-      mergePayload(aggregate, j);
-    }catch(e){ console.error('scan error', ep, e); }
-  }
+  const queue = [...state.endpoints];
+  const workers = Math.min(2, queue.length); // throttle para no saturar Bosch
+  const sleep = ms => new Promise(r=>setTimeout(r, ms));
+
+  const worker = async()=>{
+    while(queue.length){
+      const ep = queue.shift();
+      try{
+        const res = await fetch('/api/scrape',{
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ bvms:ep.bvms, vrm:ep.vrm, ip:ep.ip, user, pass })
+        });
+        if (!res.ok){ console.warn('scan fail', ep, await res.text()); continue; }
+        const j = await res.json();
+        mergePayload(aggregate, j);
+      }catch(e){ console.error('scan error', ep, e); }
+      await sleep(1200); // backoff entre VRM para cuidar producción
+    }
+  };
+  await Promise.all(Array.from({length:workers}, worker));
   applyPayload(aggregate);
 }
 function mergePayload(dst, j){
