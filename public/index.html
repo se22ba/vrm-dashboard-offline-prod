@@ -22,11 +22,13 @@
     <div class="controls">
       <div class="field">
         <label>BVMS</label>
-        <select id="sel-bvms" class="select"></select>
+        <input id="sel-bvms" list="bvms-list" class="select" placeholder="BVMS" />
+        <datalist id="bvms-list"></datalist>
       </div>
       <div class="field">
         <label>VRM</label>
-        <select id="sel-vrm" class="select"></select>
+        <input id="sel-vrm" list="vrm-list" class="select" placeholder="VRM" />
+        <datalist id="vrm-list"></datalist>
       </div>
       <div class="field">
         <label>IP del VRM</label>
@@ -63,7 +65,7 @@
 
       <button class="btn primary" id="btn-scan">Escanear</button>
 
-      <!--<label class="btn file">
+      <label class="btn file">
         <input id="f-index" type="file" accept=".mhtml,.mht,.html,.htm" hidden />
         Adjuntar index.mhtml
       </label>
@@ -81,7 +83,7 @@
       </label>
       <button class="btn success" id="btn-parse">
         Parsear adjuntos <span id="attach-badge" class="badge">0/4</span>
-      </button>-->
+      </button>
     </div>
 
     <div class="selected-endpoints">
